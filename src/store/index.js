@@ -35,7 +35,8 @@ export default new Vuex.Store({
       await addDoc(collection(db, "todos"), {
         task: payload.newTask,
         done: false,
-        date: Date.now()
+        date: Date.now(),
+        dueDate : null
       });
     },
     loadTask(){
@@ -58,7 +59,8 @@ export default new Vuex.Store({
           const todo = {
             id: doc.id,
             task: doc.data().task,
-            done: doc.data().done
+            done: doc.data().done,
+            dueDate: doc.data().dueDate
           }
           tmpTodos.push(todo)
         })
@@ -71,6 +73,16 @@ export default new Vuex.Store({
     async doneTask(context,payload){
       await updateDoc(doc(db, "todos", payload.id), {
         done: !payload.done
+      });
+    },
+    async updateTask(context,payload){
+      await updateDoc(doc(db, "todos", payload.id), {
+        task: payload.task
+      });
+    },
+    async updateTaskDueDate(context,payload){
+      await updateDoc(doc(db, "todos", payload.id), {
+        dueDate: payload.dueDate
       });
     },
   },

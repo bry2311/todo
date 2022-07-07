@@ -219,7 +219,7 @@
       },
       formatDate(date){
         if (date) {
-          return moment(String(date)).format('dddd DD-MM-YYYY')
+          return moment(String(date)).format('dddd, DD - MM - YYYY')
         }
       }
     },

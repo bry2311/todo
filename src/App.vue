@@ -22,6 +22,7 @@
           v-for="item in items"
           :key="item.title"
           :to="item.to"
+          @click="updateTitle(item.title)"
           link
         >
           <v-list-item-icon>
@@ -51,10 +52,8 @@
 
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-app-bar-title>Todo List</v-app-bar-title>
-
+      <v-app-bar-title>{{title}}</v-app-bar-title>
       <v-spacer></v-spacer>
-
       <!-- <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
@@ -80,10 +79,16 @@
     data: () => ({ 
       drawer: null,
       items: [
-        { title: 'Todo', icon: 'mdi-format-list-checks', to: '/' },
+        { title: 'Todo List', icon: 'mdi-format-list-checks', to: '/' },
         { title: 'About', icon: 'mdi-image', to:'/about'},
       ],
       right: null, 
+      title: 'Todo List'
     }),
+    methods:{
+      updateTitle(value){
+        this.title = value
+      }
+    }
   }
 </script>

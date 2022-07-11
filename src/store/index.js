@@ -55,7 +55,7 @@ export default new Vuex.Store({
       //   tmpTodos.push(todo)
       // })
       // this.commit('updateTasks',{tmpTodos})
-
+      //tambah comment
       const que = query(collection(db, "todos"),orderBy('date','desc'));
       onSnapshot(que, (querySnapshot) => {
         let tmpTodos = []

@@ -80,7 +80,7 @@
       drawer: null,
       items: [
         { title: 'Todo List', icon: 'mdi-format-list-checks', to: '/' },
-        { title: 'About', icon: 'mdi-image', to:'/about'},
+        { title: 'Wishlist', icon: 'mdi-image', to:'/wishlist'},
       ],
       right: null, 
       title: 'Todo List'

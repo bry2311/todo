@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    wishlist: [],
     tasks: [],
   },
   getters: {
@@ -28,6 +29,9 @@ export default new Vuex.Store({
     },
     updateTasks(state,payload){
       state.tasks = payload.tmpTodos
+    },
+    updateWishlist(state,payload){
+      state.wishlist = payload.tmpWishlist
     }
   },
   actions: {
@@ -82,6 +86,48 @@ export default new Vuex.Store({
     },
     async updateTaskDueDate(context,payload){
       await updateDoc(doc(db, "todos", payload.id), {
+        dueDate: payload.dueDate
+      });
+    },
+    async addWishlist(context,payload){
+      await addDoc(collection(db, "wishlist"), {
+        wish: payload.newWishlist,
+        done: false,
+        date: Date.now(),
+        dueDate : null
+      });
+    },
+    loadWishlist(){
+      const que = query(collection(db, "wishlist"),orderBy('date','desc'));
+      onSnapshot(que, (querySnapshot) => {
+        let tmpWishlist = []
+        querySnapshot.forEach((doc) => {
+          const wish = {
+            id: doc.id,
+            wish: doc.data().wish,
+            done: doc.data().done,
+            dueDate: doc.data().dueDate
+          }
+          tmpWishlist.push(wish)
+        })
+        this.commit('updateWishlist',{tmpWishlist})
+      })
+    },
+    async deleteWishlist(context, payload){
+      await deleteDoc(doc(db, "wishlist", payload.id));
+    },
+    async doneWishlist(context,payload){
+      await updateDoc(doc(db, "wishlist", payload.id), {
+        done: !payload.done
+      });
+    },
+    async updateWishlist(context,payload){
+      await updateDoc(doc(db, "wishlist", payload.id), {
+        wish: payload.wish
+      });
+    },
+    async updateWishDueDate(context,payload){
+      await updateDoc(doc(db, "wishlist", payload.id), {
         dueDate: payload.dueDate
       });
     },
